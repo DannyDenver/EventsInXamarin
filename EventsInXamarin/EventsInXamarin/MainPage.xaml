@@ -4,8 +4,20 @@
              xmlns:local="clr-namespace:EventsInXamarin"
              x:Class="EventsInXamarin.MainPage">
 
-	<Label Text="Welcome to Xamarin Forms!" 
+    <StackLayout VerticalOptions="Center" Spacing="20" >
+        <Label Text="Job Manager" 
            VerticalOptions="Center" 
-           HorizontalOptions="Center" />
+           HorizontalOptions="Center"  />
 
-</ContentPage>
+        <Picker SelectedIndexChanged="OnPickerSelectedIndexChanged" x:Name="picker" Title="Select a job">
+        </Picker>
+
+        <ListView x:Name="employeesOnJob" SeparatorColor="Blue" HasUnevenRows="True"></ListView>
+
+        <Label>Start Date:</Label>
+        <Label x:Name="startDate"></Label>
+        <Label>End Date:</Label>
+        <Label x:Name="endDate"></Label>
+    </StackLayout>
+ 
+    </ContentPage>
