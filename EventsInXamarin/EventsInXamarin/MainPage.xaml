@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:EventsInXamarin"
-             x:Class="EventsInXamarin.MainPage">
+             x:Class="EventsInXamarin.MainPage"
+             Padding="20,0,20,0">
 
     <StackLayout VerticalOptions="Center" Spacing="20" >
         <Label Text="Job Manager" 
@@ -18,6 +19,13 @@
         <Label x:Name="startDate"></Label>
         <Label>End Date:</Label>
         <Label x:Name="endDate"></Label>
+
+        <Button Clicked="StartButton_Click" Text="Start"></Button>
+        <Label x:Name="progressText" ></Label>
+
+        <ProgressBar x:Name="progressBar" ></ProgressBar>
+        
+        
     </StackLayout>
  
     </ContentPage>

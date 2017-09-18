@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using Xamarin.Forms;
 using EventsInXamarin.Model;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace EventsInXamarin
 {
@@ -12,6 +14,8 @@ namespace EventsInXamarin
     {
         public List<Job> _jobList { get; set; }
         public List<Employee> _employeesList { get; set; }
+        delegate void ShowProgressDelegate(int val);
+        delegate void StartProcessDelegate(int val);
 
         public MainPage()
         {
@@ -51,9 +55,40 @@ namespace EventsInXamarin
         {
             this.employeesOnJob.ItemsSource = _employeesList.Where(x => x.Jobs.Any(j => j.ID == jobId)).Select(x => x.Name);
         }
+
+        private void StartButton_Click(object sender, EventArgs e)
+        {
+            var progDel = new StartProcessDelegate(StartProcess);
+            progDel.BeginInvoke(10, null, null);  ///invoce asyncronously 
+            
+        }
+
+        private async void StartProcess(int max)
+        {
+            ShowProgress(0);
+            for(int i = 0; i <= max; i++)
+            {
+                await Task.Delay(1000);
+                // lblOutput.Text = i.ToString();
+                // this.pbStatus.Value = i;
+
+                ShowProgress(i);
+            }
+        }
+
+        private void ShowProgress(int i)
+        {
+            var del = new ShowProgressDelegate(ShowProgress);
+            Device.BeginInvokeOnMainThread(()=>  // get into GUI thread
+            {
+                progressText.Text = (i * 10).ToString() + "%";
+                progressBar.Progress = (i / 10.0);
+            });        
+        }
+
+
         private void InstantiateJobsAndEmployees()
         {
-
             _jobList = new List<Job>
             {
                 new Job{ Title= "SalesMan", ID=1, EndDate= new DateTime(2014,2,3), StartDate=new DateTime(2016,4,5)},
